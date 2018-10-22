@@ -1,31 +1,22 @@
-class Characters {
-	constructor(x, y, sprite) {
-		this.x = x
-		this.y = y
-		this.sprite = sprite
-	}
-
-	reset() {
-		console.log("Voltam todos do início")
-	}
-}
-
 // Enemies our player must avoid
-class Enemy extends Characters {
-	constructor(x, y, sprite, speed) {
-		super()
+class Enemy {
+	constructor(x, y, speed) {
 		this.x = x
 		this.y = y 
-		this.sprite = 'images/enemy-bug.png'
 		this.speed = speed
+		this.sprite = 'images/enemy-1.png'
 	}
 
 	update(dt) {
 		// You should multiply any movement by the dt parameter
 		// which will ensure the game runs at the same speed for
 		// all computers.
-		this.x = this.x * dt
+		this.x += this.speed * dt
 
+		if(this.x > 505) {
+			this.x = -90
+		}
+		
 	}
 
 	// Draw the enemy on the screen, required method for game
@@ -38,16 +29,17 @@ class Enemy extends Characters {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-class Player extends Characters {
-	constructor(sprite = 'images/char-boy.png') {
-		super(sprite)
-		this.x = 202
-		this.y = 400
-		this.sprite = sprite
+class Player {
+	constructor(x, y, speed) {
+		this.x = x
+		this.y = y
+		this.speed = speed
+		this.sprite = 'images/char-player.png'
 	}
 
 	update() {
-
+	
+	
 	}
 
 	render() {
@@ -57,22 +49,31 @@ class Player extends Characters {
 	handleInput(key) {
 		switch (key) {
 			case 'up':
-				console.log("foi pra cima")
-				this.y -= 90
+				if(this.y > 127) {
+					this.y -= 85
+				}
 				break;
 			case 'left':
-				console.log("foi pra esquerda")
-				this.x -= 100
+				if(this.x > 101) {
+					this.x -= 100
+				}
 				break;
 			case 'right':
-				console.log("foi pra direita")
-				this.x += 100
+				if(this.x < 419){
+					this.x += 100
+				}
 				break;
 			case 'down':
-				console.log("foi pra baixo")
-				this.y += 90
+				if(this.y < 400) {
+					this.y += 85
+				}
 				break;
 		}
+	}
+
+	reset() {
+		this.x = 220
+		this.y = 390
 	}
 
 }
@@ -80,18 +81,13 @@ class Player extends Characters {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const allEnemies = []
-const player = new Player()
-const inimigo1 = new Enemy(10, 20, null, 120)
-inimigo1.update(10)
+const allEnemies = [
+	new Enemy(0, 305, Math.floor(Math.random() * 320)),
+	new Enemy(110, 225, Math.floor(Math.random() * 320)),
+	new Enemy(0, 145, Math.floor(Math.random() * 320))
+]
 
-
-console.log(inimigo1)
-console.log(player)
-
-
-
-
+const player = new Player(220, 383, 50)
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
