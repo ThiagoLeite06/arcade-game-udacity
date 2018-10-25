@@ -1,18 +1,26 @@
+
 class Gamer {
+	
 	constructor(x, y) {
 		this.x = x
 		this.y = y
 	}
+
+
+	render() {
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	}
 }
 
 // Enemies our player must avoid
+
 class Enemy extends Gamer {
-	constructor(x, y, speed) {
+	constructor(x, y, speed, sprite) {
 		super(x, y)
 		this.x = x
 		this.y = y 
 		this.speed = speed
-		this.sprite = 'images/enemy-1.png'
+		this.sprite = sprite
 	}
 
 	update(dt) {
@@ -21,12 +29,12 @@ class Enemy extends Gamer {
 		// all computers.
 		this.x += this.speed * dt
 
-		if(this.x > 505) {
+		if (this.x > 505) {
 			this.x = -90
 			this.speed = Math.floor(Math.random() * 256 + 100)
 		}
 
-		if (Math.abs(this.x - player.x) < 80 && Math.abs(this.y - player.y) < 60) {
+		if (Math.abs(this.x - player.x) < 50 && Math.abs(this.y - player.y) < 20) {
 			alert("Ops")
 			player.reset()
 			this.reset()
@@ -40,9 +48,7 @@ class Enemy extends Gamer {
 	}
 
 	// Draw the enemy on the screen, required method for game
-	render(){
-		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	}
+
 	
 }
 
@@ -63,10 +69,6 @@ class Player extends Gamer {
 	
 	}
 
-	render() {
-		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	}
-	
 	handleInput(key) {
 		switch (key) {
 			case 'up':
@@ -119,9 +121,9 @@ class Player extends Gamer {
 // Place the player object in a variable called player
 
 const allEnemies = [
-	new Enemy(0, 305, Math.floor(Math.random() * 320)),
-	new Enemy(110, 225, Math.floor(Math.random() * 320)),
-	new Enemy(0, 145, Math.floor(Math.random() * 320))
+	new Enemy(0, 305, Math.floor(Math.random() * 320), 'images/enemy1.png'),
+	new Enemy(110, 225, Math.floor(Math.random() * 320), 'images/enemy2.png'),
+	new Enemy(0, 145, Math.floor(Math.random() * 320), 'images/enemy3.png')
 ]
 
 const player = new Player(220, 383)
