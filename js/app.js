@@ -4,7 +4,6 @@ class Gamer {
 		this.y = y
 	}
 
-
 	render() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
@@ -21,18 +20,20 @@ class Enemy extends Gamer {
 		this.sprite = sprite
 	}
 
-	update(dt) {
+	update(dt, playerPositionX = player.x, playerPositionY = player.y) {
 		// You should multiply any movement by the dt parameter
 		// which will ensure the game runs at the same speed for
 		// all computers.
 		this.x += this.speed * dt
+		const fieldWidth = 505
+		const positionEnemyStart = -90
 
-		if (this.x > 505) {
-			this.x = -90
+		if (this.x > fieldWidth) {
+			this.x = positionEnemyStart
 			this.speed = Math.floor(Math.random() * 256 + 100)
 		}
 
-		if (Math.abs(this.x - player.x) < 50 && Math.abs(this.y - player.y) < 20) {
+		if (Math.abs(this.x - playerPositionX) < 50 && Math.abs(this.y - playerPositionY) < 20) {
 			alert("Ops")
 			player.reset()
 			this.reset()
@@ -42,7 +43,7 @@ class Enemy extends Gamer {
 	}
 
 	reset() {
-		this.x = -500
+		this.x = positionEnemyStart
 	}
 
 	// Draw the enemy on the screen, required method for game
@@ -117,11 +118,17 @@ class Player extends Gamer {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+const getRandomSpeed = (min, max) => {
+	min = Math.ceil(min)
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min
+
+}
 
 const allEnemies = [
-	new Enemy(0, 305, Math.floor(Math.random() * 320), 'images/enemy1.png'),
-	new Enemy(110, 225, Math.floor(Math.random() * 320), 'images/enemy2.png'),
-	new Enemy(0, 145, Math.floor(Math.random() * 320), 'images/enemy3.png')
+	new Enemy(0, 305, getRandomSpeed(150, 500), 'images/enemy1.png'),
+	new Enemy(110, 225, getRandomSpeed(150, 500), 'images/enemy2.png'),
+	new Enemy(0, 145, getRandomSpeed(150, 500), 'images/enemy3.png')
 ]
 
 const player = new Player(220, 383)
