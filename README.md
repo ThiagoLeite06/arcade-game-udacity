@@ -3,7 +3,7 @@ frontend-nanodegree-arcade-game - Bolsofrogger
 
 In this project you will be building your own arcade game. Once finished, your game should look as shown on this gif:
 
-(https://github.com/ThiagoLeite06/arcade-game-udacity/blob/master/images/bolsofrogger.gif)
+[logo]: (https://github.com/ThiagoLeite06/arcade-game-udacity/blob/master/images/bolsofrogger.gif)
 
 
 
