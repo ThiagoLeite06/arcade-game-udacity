@@ -1,3 +1,5 @@
+'use strict';
+
 class Gamer {
 	constructor(x, y) {
 		this.x = x
@@ -20,7 +22,7 @@ class Enemy extends Gamer {
 		this.sprite = sprite
 	}
 
-	update(dt) {
+	update(dt, playerPositionX = player.x, playerPositionY = player.y) {
 		// You should multiply any movement by the dt parameter
 		// which will ensure the game runs at the same speed for
 		// all computers.
@@ -33,7 +35,7 @@ class Enemy extends Gamer {
 			this.speed = Math.floor(Math.random() * 256 + 100)
 		}
 
-		if (Math.abs(this.x - player.x) < 50 && Math.abs(this.y - player.y) < 20) {
+		if (Math.abs(this.x - playerPositionX) < 50 && Math.abs(this.y - playerPositionY) < 20) {
 			alert("Ops")
 			player.reset()
 			this.reset()
